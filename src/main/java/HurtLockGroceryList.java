@@ -107,12 +107,60 @@ public class HurtLockGroceryList {
         }
 
         // Print the aggregated data
-       // printData(itemData, exceptionCount);
+        printData(itemData, exceptionCount);
         return itemData;
 
     }
 
 
+    private void printData(Map<String, Map<String, Integer>> itemData, int exceptionCount) {
+        for (Map.Entry<String, Map<String, Integer>> entry : itemData.entrySet()) {
+            String name = entry.getKey();
+            Map<String, Integer> prices = entry.getValue();
+
+            // Print the name and total count with formatting
+            System.out.println(String.format("name:    %-14s seen: %2d times", name,
+                    prices.values().stream().mapToInt(Integer::intValue).sum()));
+            System.out.println("=============           =============");
+
+            // Print each price and its count
+            for (Map.Entry<String, Integer> priceEntry : prices.entrySet()) {
+                System.out.println(String.format("Price:   %-14s seen: %2d %s",
+                        priceEntry.getKey(),
+                        priceEntry.getValue(),
+                        priceEntry.getValue() > 1 ? "times" : "time"));
+                System.out.println("-------------           -------------");
+            }
+
+            System.out.println();
+        }
+
+        // Print the error count
+        System.out.println(String.format("Errors                seen: %2d times", exceptionCount));
+    }
+
+
+/*
+    private void printData(Map<String, Map<String, Integer>> itemData, int exceptionCount) {
+        for (Map.Entry<String, Map<String, Integer>> entry : itemData.entrySet()) {
+            String name = entry.getKey();
+            Map<String, Integer> prices = entry.getValue();
+
+            System.out.println("name:    " + name + "\t\t seen: " + prices.values().stream().mapToInt(Integer::intValue).sum() + " times");
+            System.out.println("=============  \t\t =============");
+
+            for (Map.Entry<String, Integer> priceEntry : prices.entrySet()) {
+                System.out.println("Price:   " + priceEntry.getKey() + "\t\t seen: " + priceEntry.getValue() + " " + (priceEntry.getValue() > 1 ? "times" : "time"));
+                System.out.println("-------------\t\t -------------");
+            }
+
+            System.out.println();
+        }
+
+        System.out.println("Errors\t\t\t seen: " + exceptionCount + " times");
+    }
+
+*/
 
     public int getExceptionCount() {
         return exceptionCount;
