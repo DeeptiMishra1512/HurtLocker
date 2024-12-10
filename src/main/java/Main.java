@@ -24,7 +24,7 @@ public class Main {
         }
         System.out.println(output);
         HurtLockGroceryList groceryList = new HurtLockGroceryList();
-        groceryList.uploadGroceryMap();
+        groceryList.uploadGroceryMap(output);
 
     }
 

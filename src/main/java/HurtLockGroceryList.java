@@ -7,24 +7,19 @@ import java.util.regex.Pattern;
 public class HurtLockGroceryList {
 
    //creating Linked Hash Map instead of Hash Map to keep the values in order of insertion
-    //Have a nested Map as value which in turn stores item as key and number of times
-    //Item occurs corresponding to a price value as Value in Map
+   //Have a nested Map as value which in turn stores item as key and number of times
+   // Item occurs corresponding to a price value as Value in Map
     Map<String, Map<String, Integer>> itemData = new LinkedHashMap<>();
     int exceptionCount =0;
 
-    //Created method to upload Linked Hash map with grocery list
-    public Map<String, Map<String, Integer>> uploadGroceryMap() {
 
-    //String variable to take the data from file into it
-        String inputText = "";
-        try {
-            inputText = (new Main()).readRawDataToString();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
+    //Created method to upload Linked Hash map with grocery list
+    public Map<String, Map<String, Integer>> uploadGroceryMap(String inputText) {
+
 
         //variable to keep track of exceptions raised for value not found
-         exceptionCount = 0;
+       //  exceptionCount = 0;
 
         // Splitting the whole text in file based on '##' and storing the values in array
         String[] items = inputText.split("##");
