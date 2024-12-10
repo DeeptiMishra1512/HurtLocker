@@ -16,6 +16,31 @@ public class HurtLockerTest {
         groceryList = new HurtLockGroceryList();
     }
 
+    // Test for correct aggregation of prices
+    @Test
+    public void testCorrectPriceAggregation() {
+        String rawData = "Name:Milk@Price:3.23##Name:Milk@Price:3.23##Name:Bread@Price:1.23##";
+        HurtLockGroceryList parser = new HurtLockGroceryList() {
+           // @Override
+            public String readRawDataToString() {
+                return rawData;
+            }
+        };
+
+        parser.uploadGroceryMap();
+        Map<String, Map<String, Integer>> itemData = parser.getItemData();
+
+        // Check Milk
+        Map<String, Integer> milkPrices = itemData.get("Milk");
+        assertEquals(2, milkPrices.get("3.23"), "Milk price 3.23 should appear 2 times.");
+
+        // Check Bread
+        Map<String, Integer> breadPrices = itemData.get("Bread");
+        assertEquals(1, breadPrices.get("1.23"), "Bread price 1.23 should appear 1 time.");
+    }
+
+
+
     @Test
     public void testUploadGroceryMap_NormalizedNames() {
         // Mock data with various names for normalization

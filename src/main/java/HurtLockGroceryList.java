@@ -102,8 +102,10 @@ public class HurtLockGroceryList {
 
                 }
 
-                // Aggregate data
+                // Collect the data in a Map to return for display
                 if (name != null && price != null) {
+
+                    //putIfAbsent method of HashMap is used to
                     itemData.putIfAbsent(name, new LinkedHashMap<>());
                     Map<String, Integer> prices = itemData.get(name);
                     prices.put(price, prices.getOrDefault(price, 0) + 1);
@@ -114,7 +116,7 @@ public class HurtLockGroceryList {
             }
         }
 
-        // Print the aggregated data
+        // Call PrintData method to print the aggregated data
         printData(itemData, exceptionCount);
         return itemData;
 
@@ -147,31 +149,11 @@ public class HurtLockGroceryList {
         System.out.println(String.format("Errors                seen: %2d times", exceptionCount));
     }
 
-
-/*
-    private void printData(Map<String, Map<String, Integer>> itemData, int exceptionCount) {
-        for (Map.Entry<String, Map<String, Integer>> entry : itemData.entrySet()) {
-            String name = entry.getKey();
-            Map<String, Integer> prices = entry.getValue();
-
-            System.out.println("name:    " + name + "\t\t seen: " + prices.values().stream().mapToInt(Integer::intValue).sum() + " times");
-            System.out.println("=============  \t\t =============");
-
-            for (Map.Entry<String, Integer> priceEntry : prices.entrySet()) {
-                System.out.println("Price:   " + priceEntry.getKey() + "\t\t seen: " + priceEntry.getValue() + " " + (priceEntry.getValue() > 1 ? "times" : "time"));
-                System.out.println("-------------\t\t -------------");
-            }
-
-            System.out.println();
-        }
-
-        System.out.println("Errors\t\t\t seen: " + exceptionCount + " times");
-    }
-
-*/
-
     public int getExceptionCount() {
         return exceptionCount;
     }
 
+    public Map<String, Map<String, Integer>> getItemData() {
+        return itemData;
+    }
 }
