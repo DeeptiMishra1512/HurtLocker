@@ -105,7 +105,8 @@ public class HurtLockGroceryList {
                 // Collect the data in a Map to return for display
                 if (name != null && price != null) {
 
-                    //putIfAbsent method of HashMap is used to
+                    //putIfAbsent method of HashMap is used to add value
+                    // and if value is null set it to default value
                     itemData.putIfAbsent(name, new LinkedHashMap<>());
                     Map<String, Integer> prices = itemData.get(name);
                     prices.put(price, prices.getOrDefault(price, 0) + 1);
@@ -116,7 +117,7 @@ public class HurtLockGroceryList {
             }
         }
 
-        // Call PrintData method to print the aggregated data
+        // Call PrintData method to print the collected data
         printData(itemData, exceptionCount);
         return itemData;
 
