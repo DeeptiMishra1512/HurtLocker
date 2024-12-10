@@ -22,7 +22,7 @@ public class Main {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-      //  System.out.println(output);
+        System.out.println(output);
         HurtLockGroceryList groceryList = new HurtLockGroceryList();
         groceryList.uploadGroceryMap();
 

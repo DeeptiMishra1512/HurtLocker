@@ -5,13 +5,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HurtLockGroceryList {
+
+   //creating Linked Hash Map instead of Hash Map to keep the values in order of insertion
+    //Have a nested Map as value which in turn stores item as key and number of times
+    //Item occurs corresponding to a price value as Value in Map
     Map<String, Map<String, Integer>> itemData = new LinkedHashMap<>();
     int exceptionCount =0;
 
-    //Created method to upload Hash map with grocery list
+    //Created method to upload Linked Hash map with grocery list
     public Map<String, Map<String, Integer>> uploadGroceryMap() {
 
-
+    //String variable to take the data from file into it
         String inputText = "";
         try {
             inputText = (new Main()).readRawDataToString();
@@ -19,18 +23,21 @@ public class HurtLockGroceryList {
             throw new RuntimeException(e);
         }
 
-
+        //variable to keep track of exceptions raised for value not found
          exceptionCount = 0;
 
-        // Split on '##'
+        // Splitting the whole text in file based on '##' and storing the values in array
         String[] items = inputText.split("##");
 
-        for (String item : items) {
+
+        for (int i = 0; i < items.length; i++) {
+            String item = items[i];
             try {
-                // Match key-value pairs
+                // Creating Pattern to use for matching it against input file
                 Pattern keyValuePattern = Pattern.compile("([a-zA-Z]+)[@:^*%]([^;##]*)");
                 Matcher matcher = keyValuePattern.matcher(item);
 
+                //Variables to store the values of Name of Item and its Value for Display
                 String name = null;
                 String price = null;
 
@@ -38,13 +45,14 @@ public class HurtLockGroceryList {
                     String key = matcher.group(1).trim();
                     String value = matcher.group(2).trim();
 
-                    // Handle missing values
+                    // Handle missing values and increment exception count
                     if (value.isEmpty()) {
                         exceptionCount++;
                         throw new IllegalArgumentException("Missing value for key: " + key);
                     }
 
-                    // Normalize names
+                    // Identifying different ways the names of Items are written
+                    //And defining a definite name String
                     if (key.equalsIgnoreCase("Name")) {
                         if (value.matches("(?i)c[o0]{2}kies")) {
                             value = "Cookies";
@@ -57,7 +65,7 @@ public class HurtLockGroceryList {
                         price = value;
                     }
                     if (key.equalsIgnoreCase("Name")) {
-                        if (value.matches("[Bb][Rr][Ee][Aa][Dd]")) {
+                        if (value.matches("(?i)BREAD")) {
                             value = "Bread";
 
                         }
@@ -69,7 +77,7 @@ public class HurtLockGroceryList {
                     }
 
                     if (key.equalsIgnoreCase("Name")) {
-                        if (value.matches("[Mm][Ii][Ll][Kk]")) {
+                        if (value.matches("(?i)MILK")) {
                             value = "Milk";
 
                         }
@@ -81,7 +89,7 @@ public class HurtLockGroceryList {
                     }
 
                     if (key.equalsIgnoreCase("Name")) {
-                        if (value.matches("[Aa][Pp]{2}[Ll][Ee][Ss]")) {
+                        if (value.matches("(?i)APPLES")) {
                             value = "Apples";
 
                         }
